@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef unsigned long long LL;
+int dp[105][105];
+int palindrome(string s,int l,int h)
+{
+    if(l>h) return INT_MAX;
+    if(h==l) return 0;
+    if(h == l+1) return (s[l]!=s[h]);
+    if(dp[l][h]!=-1) return dp[l][h];
+    int temp;
+    if(s[l]==s[h]) temp = palindrome(s,l+1,h-1);
+    else temp = 1 + min(palindrome(s,l+1,h),palindrome(s,l,h-1));
+    return dp[l][h] = temp;
+}
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);cout.tie(0);
+    int t,i,j,n,w;
+    cin>>t;
+    string s;
+    for(w=1;w<=t;w++)
+    {
+        getline(cin,s);
+        while(s.length()==0) getline(cin,s);
+        n = s.length();
+        memset(dp,-1,sizeof(dp));
+        cout<<"Case "<<w<<": "<<palindrome(s,0,n-1)<<"\n";
+    }
+    return 0;
+}
